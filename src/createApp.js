@@ -10,8 +10,11 @@ export default (modifierGroups, reactions) => {
   return { actions, store };
 };
 
-const initReactions = (reactions, actions, store) => forOwn(reactions,
-  group => forOwn(group, (reaction, key) => actions[key].subscribe(payload => reaction(actions, payload, store))));
+const initReactions = (reactions, actions, store) =>
+  forOwn(reactions, group =>
+    forOwn(group, (reaction, key) =>
+      actions[key].subscribe(payload =>
+        reaction(actions, payload, store))));
 
 // get all keys, used for creating actions
 const getReactionKeys = reactions => Object.keys(reactions).reduce((arr, key) =>

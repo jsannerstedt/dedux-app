@@ -3,7 +3,8 @@
     "strict": 0,
     "no-use-before-define": 0,
     "comma-dangle": 0,
-    "no-shadow": 0
+    "no-shadow": 0,
+    "no-restricted-syntax": 0
   },
   "extends": "airbnb/base"
 }
