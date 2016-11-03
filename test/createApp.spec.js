@@ -14,22 +14,30 @@ describe('createApp', function () {
     assert.isFunction(app.actions.doit);
     assert.isFunction(app.actions.dostuff);
   });
+  it('should modify the state when running an action', function () {
+    const app = createApp(getModifiers(), getReactions());
+    app.actions.doit();
+
+    assert.deepEqual({foo: 'bar'}, app.store.getState().first);
+  });
+  it('should run reactions', function () {
+    const app = createApp(getModifiers(), getReactions());
+    app.actions.dostuff();
+
+    assert.deepEqual({foo: 'bar'}, app.store.getState().first);
+  });
 });
 
 function getModifiers() {
   return {
     first: {
-      doit: () => {
-      }
+      doit: () => ({ foo: 'bar' })
     }
   };
 }
 
 function getReactions() {
-  return {
-    second: {
-      dostuff: () => {
-      }
-    }
-  };
+  return [{
+    dostuff: actions => actions.doit()
+  }];
 }

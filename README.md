@@ -7,22 +7,20 @@ const modifiers = {
         addTodo: (todo, state) => ({ todos: [...state.todos, todo]})
     }
 };
-const reactions = {
-    asyncStuff: {
+const reactions = [{
         addAsyncTodo: (actions, todo) => {
             setTimeout(() => actions.addTodo(todo), 300);
         }
-    }
-};
-const app = createApp(modifiers, reactions);
+    }];
+const { actions, store } = createApp(modifiers, reactions);
 
-app.store.subscribe(state => {
+store.subscribe(state => {
     console.log(state);
 });
 
-app.actions.addTodo('do it!');
+actions.addTodo('do it!');
 // logs { todos: ['do it']}
 
-app.actions.addASyncTodo('do it!');
+actions.addASyncTodo('do it!');
 // logs { todos: ['do it']} after 300ms
 ```
