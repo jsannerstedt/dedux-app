@@ -26,6 +26,28 @@ describe('createApp', function () {
 
     assert.deepEqual({foo: 'bar'}, app.store.getState().first);
   });
+  it('should provide state as second param', function (done){
+    const initialState = {asdf: 'asdf'};
+    const reactions = [{
+      makeItSo: (actions, state) => {
+        assert.deepEqual(initialState, state);
+        done();
+      }
+    }];
+    const {actions} = createApp({}, reactions, initialState);
+    actions.makeItSo();
+  });
+  it('should provide all action args as last params', function (done){
+    const reactions = [{
+      makeItSo: (actions, state, arg1, arg2) => {
+        assert.deepEqual(arg1, '1');
+        assert.deepEqual(arg2, '2');
+        done();
+      }
+    }];
+    const {actions} = createApp({}, reactions);
+    actions.makeItSo('1', '2');
+  });
 });
 
 function getModifiers() {
