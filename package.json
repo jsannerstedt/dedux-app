@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "",
   "main": "lib/dedux-app.js",
-  "module": "es/createApp.js",
+  "module": "es/dedux-app.js",
   "bugs": "https://github.com/jsannerstedt/dedux-app",
   "scripts": {
     "build": "npm run lint && npm run build:es && npm run build:umd",
