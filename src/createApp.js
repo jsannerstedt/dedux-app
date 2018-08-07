@@ -1,8 +1,12 @@
-import { createStore, createActions, combineModifiers } from 'dedux';
+import createStore from './createStore';
+import combineModifiers from './combineModifiers';
+import createActions from './actionCreator';
 
 export default (modifierGroups, reactions, initialState) => {
   const modifiers = combineModifiers(modifierGroups);
-  const actions = createActions(Object.keys(modifiers).concat(getReactionKeys(reactions)));
+  const actions = createActions(
+    Object.keys(modifiers).concat(getReactionKeys(reactions))
+  );
   const store = createStore(modifiers, actions, initialState);
 
   initReactions(reactions, actions, store);
@@ -12,7 +16,7 @@ export default (modifierGroups, reactions, initialState) => {
 
 const initReactions = (reactions, actions, store) =>
   reactions.forEach(reactionGroup =>
-   Object.keys(reactionGroup).forEach(key =>
+    Object.keys(reactionGroup).forEach(key =>
       actions[key].subscribe((...payload) =>
         reactionGroup[key](actions, store.getState(), ...payload)
       )
